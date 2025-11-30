@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 📥 Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ⚙️ Setup Node.js (LTS recommended for stability)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # 📦 Install pnpm globally
+      - name: Install pnpm
+        run: npm install -g pnpm@10
+
+      # 📚 Install dependencies
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 🔨 Build the project
+      - name: Build
+        run: pnpm run build
+
+      # 🔎 Run ESLint in check mode (reports issues, does not fix)
+      - name: Lint check
+        run: pnpm lint:check
+
+      # 🎨 Run Prettier in check mode (reports formatting differences)
+      - name: Format check
+        run: pnpm format:check
+
+      # ✅ Run all test suites (regular, fuzz, stress)
+      - name: Run tests
+        run: pnpm test
+
+  release:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    # 🚦 Prevent concurrent release jobs on the same branch
+    concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+    steps:
+      # 📥 Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ⚙️ Setup Node.js with npm registry configured
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org/'
+
+      # 📦 Install pnpm globally
+      - name: Install pnpm
+        run: npm install -g pnpm@10
+
+      # 📚 Install dependencies
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 🔨 Build the project
+      - name: Build project
+        run: pnpm run build
+
+      # 🚀 Semantic Release handles versioning, changelog, and npm publish
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm dlx semantic-release

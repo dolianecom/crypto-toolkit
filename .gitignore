@@ -1,0 +1,19 @@
+# Node / pnpm
+node_modules/
+.pnpm-debug.log
+*.log
+
+# Build outputs (all packages)
+dist/
+coverage/
+
+# TypeScript
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env / secrets
+.env
+.env.*

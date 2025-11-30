@@ -1,0 +1,24 @@
+{
+  "cSpell.words": ["ciphertext", "commitlint", "doliane"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.inlineSuggest.showToolbar": "always",
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "prettier.configPath": ".prettierrc.json",
+  "prettier.useEditorConfig": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

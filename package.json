@@ -1,0 +1,82 @@
+{
+  "name": "@doliane/crypto-toolkit",
+  "version": "0.1.0",
+  "description": "Framework-agnostic, TypeScript cryptographic toolkit built on Web Crypto API (AES-GCM, AES-KW, streaming, encoders)",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "clean:dist": "rm -rf dist",
+    "dev": "tsc -w",
+    "test": "pnpm run test:regular && pnpm run test:fuzz && pnpm run test:stress",
+    "test:regular": "node dist/test/aes-gcm.spec.js && node dist/test/encoders.spec.js",
+    "test:fuzz": "node dist/test/aes-gcm.fuzz.spec.js && node dist/test/encoders.fuzz.spec.js",
+    "test:stress": "node dist/test/aes-gcm.stress.spec.js && node dist/test/encoders.stress.spec.js",
+    "lint": "eslint . --fix",
+    "lint:check": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
+  },
+  "engines": {
+    "node": ">=24.11"
+  },
+  "keywords": [
+    "crypto",
+    "aes",
+    "gcm",
+    "aes-kw",
+    "streaming",
+    "webcrypto",
+    "typescript",
+    "security",
+    "encoding",
+    "hex",
+    "base58"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dolianecom/crypto-toolkit.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "20.1.0",
+    "@commitlint/config-conventional": "20.0.0",
+    "@eslint/js": "9.39.1",
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/commit-analyzer": "13.0.1",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "12.0.2",
+    "@semantic-release/npm": "13.1.2",
+    "@semantic-release/release-notes-generator": "14.1.0",
+    "@types/node": "^24.10.1",
+    "eslint": "9.39.1",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-simple-import-sort": "12.1.1",
+    "husky": "9.1.7",
+    "lint-staged": "16.2.7",
+    "prettier": "3.7.2",
+    "ts-node": "^10.9.2",
+    "typescript-eslint": "8.48.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,json,md,yml,yaml}": [
+      "prettier --write"
+    ],
+    "*.{js,ts}": [
+      "eslint --fix"
+    ]
+  },
+  "packageManager": "pnpm@10.9.0"
+}

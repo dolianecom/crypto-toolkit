@@ -1,0 +1,39 @@
+# Ensure consistent line endings across platforms
+* text=auto eol=lf
+
+# Treat TypeScript and JavaScript files as text
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+
+# Mark JSON, YAML, Markdown, and config files as text
+*.json text
+*.yml text
+*.yaml text
+*.md text
+*.editorconfig text
+*.gitattributes text
+
+# Binary files (no diff/merge)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+*.ico binary
+
+# Archives and compiled outputs
+*.zip binary
+*.gz binary
+*.tar binary
+*.tgz binary
+*.exe binary
+*.dll binary
+
+# Lock files should always use LF
+pnpm-lock.yaml text eol=lf
+
+# GitHub Linguist overrides (optional)
+# Mark test files as not counted toward language stats
+test/* linguist-vendored

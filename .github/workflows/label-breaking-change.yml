@@ -1,0 +1,43 @@
+name: Label Breaking Changes
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  breaking-change-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract commit messages
+        id: commits
+        run: |
+          echo "messages=$(git log --pretty=format:'%s%n%b' origin/main..HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Check for breaking changes
+        id: check
+        run: |
+          if echo "${{ steps.commits.outputs.messages }}" | grep -E "BREAKING CHANGE|!:"; then
+            echo "breaking=true" >> $GITHUB_OUTPUT
+          else
+            echo "breaking=false" >> $GITHUB_OUTPUT
+          fi
+
+      # ✅ Set a custom status check message visible in PR checks summary
+      - name: Report status
+        run: |
+          if [ "${{ steps.check.outputs.breaking }}" = "true" ]; then
+            echo "::notice title=Breaking Change Detected::One or more commits indicate a breaking change."
+          else
+            echo "::notice title=No Breaking Change::No breaking changes detected in commit messages."
+          fi
+
+      # ✅ Apply a label if breaking changes are found
+      - name: Apply breaking-change label
+        if: steps.check.outputs.breaking == 'true'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: breaking-change
