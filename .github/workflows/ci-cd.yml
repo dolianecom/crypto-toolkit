@@ -52,8 +52,21 @@ jobs:
       - name: Run tests
         run: pnpm test
 
-  publish-package:
+  sonarqube:
     needs: quality-assurance
+    name: SonarQube
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  publish-package:
+    needs: sonarqube
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
