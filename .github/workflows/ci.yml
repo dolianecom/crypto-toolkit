@@ -8,9 +8,10 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+  contents: write # allow pushing tags/commits and creating releases
+  issues: write # optional, only needed if semantic-release comments on issues
+  pull-requests: write # optional, only needed if semantic-release comments on PRs
+  id-token: write # required for OIDC authentication with npm
 
 jobs:
   build-and-test:
