@@ -70,6 +70,11 @@
     "ts-node": "^10.9.2",
     "typescript-eslint": "8.48.0"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.txt"
+  ],
   "lint-staged": {
     "*.{js,ts,json,md,yml,yaml}": [
       "prettier --write"
