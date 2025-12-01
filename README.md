@@ -47,9 +47,9 @@ Works seamlessly in **Node.js (v18+)** and modern browsers.
 ## 📦 Installation
 
 ```bash
-pnpm add @doliane/crypto-toolkit
+pnpm add @dolianecom/crypto-toolkit
 # or
-npm install @doliane/crypto-toolkit
+npm install @dolianecom/crypto-toolkit
 ```
 
 ---
@@ -68,9 +68,9 @@ import {
   bytesToUtf8,
   toBase64Url,
   fromBase64Url,
-} from '@doliane/crypto-toolkit'
+} from '@dolianecom/crypto-toolkit'
 
-import { getCrypto } from '@doliane/crypto-toolkit/env.js'
+import { getCrypto } from '@dolianecom/crypto-toolkit/env.js'
 
 async function demo() {
   const crypto = getCrypto()
@@ -101,7 +101,7 @@ demo()
 ### 🌐 Browser
 
 ```ts
-import { importKey, encrypt, decrypt, randomIv, utf8ToBytes, bytesToUtf8 } from '@doliane/crypto-toolkit'
+import { importKey, encrypt, decrypt, randomIv, utf8ToBytes, bytesToUtf8 } from '@dolianecom/crypto-toolkit'
 ;(async () => {
   // Generate a random AES-256 key
   const rawKey = crypto.getRandomValues(new Uint8Array(32))

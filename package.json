@@ -1,5 +1,5 @@
 {
-  "name": "@doliane/crypto-toolkit",
+  "name": "@dolianecom/crypto-toolkit",
   "version": "0.1.0",
   "description": "Framework-agnostic, TypeScript cryptographic toolkit built on Web Crypto API (AES-GCM, AES-KW, streaming, encoders)",
   "type": "module",
