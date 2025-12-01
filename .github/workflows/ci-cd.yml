@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   pull_request:
@@ -14,7 +14,7 @@ permissions:
   id-token: write # required for OIDC authentication with npm
 
 jobs:
-  build-and-test:
+  quality-assurance:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,20 +40,20 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      # 🔎 Run ESLint in check mode (reports issues, does not fix)
+      # 🔎 Run ESLint in check mode
       - name: Lint check
         run: pnpm lint:check
 
-      # 🎨 Run Prettier in check mode (reports formatting differences)
+      # 🎨 Run Prettier in check mode
       - name: Format check
         run: pnpm format:check
 
-      # ✅ Run all test suites (regular, fuzz, stress)
+      # ✅ Run all test suites
       - name: Run tests
         run: pnpm test
 
-  release:
-    needs: build-and-test
+  publish-package:
+    needs: quality-assurance
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
