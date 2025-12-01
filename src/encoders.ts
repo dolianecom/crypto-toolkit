@@ -70,11 +70,27 @@ export function fromBase64(b64: string): Uint8Array {
 /**
  * Encodes bytes into URL-safe Base64 without padding.
  *
+ * Replaces '+' -> '-', '/' -> '_' and strips trailing '='
+ * in linear time without regex backtracking.
+ *
  * @param bytes - Input bytes.
  * @returns URL-safe Base64 string.
  */
 export function toBase64Url(bytes: Uint8Array): string {
-  return toBase64(bytes).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '')
+  const b64 = toBase64(bytes)
+
+  // Strip trailing '=' padding safely (no regex)
+  let end = b64.length
+  while (end > 0 && b64.charCodeAt(end - 1) === 61 /* '=' */) end--
+  const noPad = b64.slice(0, end)
+
+  // Translate characters in one pass
+  const out: string[] = new Array(noPad.length)
+  for (let i = 0; i < noPad.length; i++) {
+    const ch = noPad.charCodeAt(i)
+    out[i] = ch === 43 /* '+' */ ? '-' : ch === 47 /* '/' */ ? '_' : noPad[i]
+  }
+  return out.join('')
 }
 
 /**
