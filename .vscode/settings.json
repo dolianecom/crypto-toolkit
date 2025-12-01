@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["ciphertext", "commitlint", "doliane"],
+  "cSpell.words": ["ciphertext", "commitlint", "doliane", "dolianecom"],
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
