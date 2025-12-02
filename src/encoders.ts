@@ -50,7 +50,9 @@ export function concatBytes(a: Uint8Array, b: Uint8Array): Uint8Array {
  */
 export function toBase64(bytes: Uint8Array): string {
   let binary = ''
-  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i])
+  for (const byte of bytes) {
+    binary += String.fromCodePoint(byte)
+  }
   return btoa(binary)
 }
 
