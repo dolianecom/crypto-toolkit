@@ -9,8 +9,8 @@ import { webcrypto } from 'node:crypto'
  * @returns A `Crypto` instance for cryptographic operations.
  */
 export function getCrypto(): Crypto {
-  if (typeof globalThis.crypto !== 'undefined') {
-    return globalThis.crypto as Crypto
+  if (globalThis.crypto !== undefined) {
+    return globalThis.crypto
   }
-  return webcrypto as unknown as Crypto
+  return webcrypto as Crypto
 }
