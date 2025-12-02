@@ -81,15 +81,27 @@ export function toBase64Url(bytes: Uint8Array): string {
 
   // Strip trailing '=' padding safely (no regex)
   let end = b64.length
-  while (end > 0 && b64.charCodeAt(end - 1) === 61 /* '=' */) end--
+  while (end > 0 && b64.codePointAt(end - 1) === 61 /* '=' */) {
+    end--
+  }
+
   const noPad = b64.slice(0, end)
+  const out: string[] = new Array(noPad.length)
 
   // Translate characters in one pass
-  const out: string[] = new Array(noPad.length)
   for (let i = 0; i < noPad.length; i++) {
-    const ch = noPad.charCodeAt(i)
-    out[i] = ch === 43 /* '+' */ ? '-' : ch === 47 /* '/' */ ? '_' : noPad[i]
+    const ch = noPad.codePointAt(i)
+    let mapped: string
+    if (ch === 43 /* '+' */) {
+      mapped = '-'
+    } else if (ch === 47 /* '/' */) {
+      mapped = '_'
+    } else {
+      mapped = noPad[i]
+    }
+    out[i] = mapped
   }
+
   return out.join('')
 }
 
