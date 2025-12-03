@@ -1,5 +1,13 @@
 # Crypto Toolkit
 
+[![CI](https://img.shields.io/github/actions/workflow/status/dolianecom/crypto-toolkit/ci-cd.yml?branch=main&label=build)](https://github.com/dolianecom/crypto-toolkit/actions/workflows/ci-cd.yml)
+[![Coverage](https://img.shields.io/badge/coverage-COVERAGE.md-blue?logo=github)](./COVERAGE.md)
+[![Security](https://img.shields.io/badge/security-SECURITY.md-green?logo=github)](./SECURITY.md)
+[![Version](https://img.shields.io/github/v/release/dolianecom/crypto-toolkit?label=version)](https://github.com/dolianecom/crypto-toolkit/releases)
+[![License](https://img.shields.io/github/license/dolianecom/crypto-toolkit)](./LICENSE.txt)
+[![Downloads](https://img.shields.io/npm/dm/@dolianecom/crypto-toolkit)](https://www.npmjs.com/package/@dolianecom/crypto-toolkit)
+[![TypeScript](https://img.shields.io/badge/language-Typescript-blue)](https://www.typescriptlang.org/)
+
 A lightweight TypeScript/JavaScript library providing **AES‑256‑GCM encryption/decryption** and **encoding utilities** (UTF‑8, Base64, Base64URL, byte concatenation).  
 Works seamlessly in **Node.js (v18+)** and modern browsers.
 
