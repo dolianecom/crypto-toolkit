@@ -1,7 +1,6 @@
 # Crypto Toolkit
 
 A lightweight TypeScript/JavaScript library providing **AES‑256‑GCM encryption/decryption** and **encoding utilities** (UTF‑8, Base64, Base64URL, byte concatenation).  
-Includes **comprehensive test coverage** with regular, fuzz, and stress suites.  
 Works seamlessly in **Node.js (v18+)** and modern browsers.
 
 ---
@@ -14,10 +13,6 @@ Works seamlessly in **Node.js (v18+)** and modern browsers.
   - [🖥️ Node.js (ESM)](#-nodejs-esm)
   - [🌐 Browser](#-browser)
 - [🔧 API](#-api)
-- [🧪 Testing](#-testing)
-  - [⚡ Quick Test](#-quick-test)
-  - [🧭 Running Tests](#-running-tests)
-- [🛠 Development](#-development)
 - [🤝 Contributing](#-contributing)
 - [🔒 Security](#-security)
 - [🔖 Release & Versioning](#-release--versioning)
@@ -37,10 +32,6 @@ Works seamlessly in **Node.js (v18+)** and modern browsers.
 - Secure random IV generation (12 bytes, recommended for GCM)
 - Encoding helpers: UTF‑8, Base64, Base64URL, byte concatenation
 - Portable across Node.js and browsers
-- **Testing strategy with finer‑control scripts:**
-  - Regular tests (deterministic correctness)
-  - Fuzz tests (randomized breadth)
-  - Stress tests (large inputs & concurrency)
 
 ---
 
@@ -50,6 +41,8 @@ Works seamlessly in **Node.js (v18+)** and modern browsers.
 pnpm add @dolianecom/crypto-toolkit
 # or
 npm install @dolianecom/crypto-toolkit
+# or
+yarn add @dolianecom/crypto-toolkit
 ```
 
 ---
@@ -144,82 +137,10 @@ concatBytes(...arrays: Uint8Array[]): Uint8Array
 
 ---
 
-## 🧪 Testing
-
-We maintain **three layers of tests**:
-
-- **Regular tests**: deterministic correctness (round‑trip, wrong key/IV, corrupted ciphertext, malformed encodings).
-- **Fuzz tests**: randomized inputs for breadth (random plaintext, strings, AAD/tag lengths, malformed encodings).
-- **Stress tests**: large inputs and concurrency for robustness (1MB plaintext, 100 sequential, 50 concurrent, large Base64).
-
-### ⚡ Quick Test
-
-You can quickly verify the build with:
-
-```bash
-pnpm build
-node dist/scratch.js
-```
-
-Expected output:
-
-```text
-Packed: <base64url-iv>.<base64url-ciphertext>
-Decrypted: hello, world
-```
-
-### 🧭 Running Tests
-
-We use finer‑control scripts in `package.json`:
-
-```bash
-pnpm test
-pnpm test:regular
-pnpm test:fuzz
-pnpm test:stress
-```
-
-Run all suites:
-
-```bash
-pnpm build
-pnpm test
-```
-
----
-
-## 🛠 Development
-
-To set up a local development environment:
-
-```bash
-# Clone the repository
-git clone https://github.com/dolianecom/crypto-toolkit.git
-
-# Navigate into the project directory
-cd crypto-toolkit
-
-# Install dependencies
-pnpm install
-
-# Build the project
-pnpm build
-
-# Run the full test suite to verify everything works
-pnpm test
-
-# Execute a quick scratch script for a sanity check
-node dist/scratch.js
-```
-
----
-
 ## 🤝 Contributing
 
 We welcome contributions of all kinds — bug fixes, documentation improvements, and new features.  
-To keep our history clean and consistent, we follow specific development and commit guidelines.
-
-👉 Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for the full contributor guide.
+👉 Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for the full contributor guide, including testing and development instructions.
 
 ---
 
@@ -227,9 +148,6 @@ To keep our history clean and consistent, we follow specific development and com
 
 For details on reporting vulnerabilities and best practices for safe usage,  
 please see our dedicated [SECURITY.md](./SECURITY.md) file.
-
-We take security seriously and appreciate responsible disclosure.  
-Following the guidelines in `SECURITY.md` helps ensure your use of the toolkit remains secure in production environments.
 
 ---
 
@@ -240,13 +158,6 @@ We follow **Semantic Versioning (SemVer)**:
 - **MAJOR**: Breaking changes
 - **MINOR**: New features
 - **PATCH**: Bug fixes
-
-```bash
-pnpm test
-pnpm version <major|minor|patch>
-git push && git push --tags
-pnpm publish --access public
-```
 
 ---
 
@@ -279,10 +190,7 @@ A: No. AES‑GCM is for encryption/decryption. For password storage, use a hashi
 A: It's designed to be lightweight and standards‑compliant. Always audit cryptographic code before deploying in production.
 
 **Q: Does this library include encoders?**  
-A: Yes. It provides UTF‑8, Base64, Base64URL, and byte concatenation helpers, tested with regular, fuzz, and stress suites.
-
-**Q: How are tests organized?**  
-A: With finer‑control scripts: `test:regular`, `test:fuzz`, `test:stress`, and `test` to run everything.
+A: Yes. It provides UTF‑8, Base64, Base64URL, and byte concatenation helpers.
 
 ---
 
@@ -294,8 +202,6 @@ If you need help:
 - Check the [FAQ](#-faq) and [Roadmap](#-roadmap) for common questions and planned features.
 - For security concerns, follow the steps in the [Security](#-security) section.
 - For general questions, discussions, or feature requests, use [GitHub Discussions](https://github.com/dolianecom/crypto-toolkit/discussions).
-
-We aim to respond promptly and welcome community engagement.
 
 ---
 

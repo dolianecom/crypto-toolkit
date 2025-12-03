@@ -2,7 +2,7 @@
 
 We're excited that you want to contribute! 🎉  
 This document contains everything you need to know about working on the project.  
-The README is focused on **using** the library — this guide is focused on **building** it.
+The README is focused on **using** the library — this guide is focused on **building and testing** it.
 
 ---
 
@@ -30,24 +30,60 @@ Review these documents before contributing to ensure your changes maintain both 
    pnpm install
    ```
 
-3. **Run tests**
+3. **Build the project**
 
    ```bash
-   pnpm test
+   pnpm build
    ```
 
-   For details on what is covered by the test suites (regular, fuzz, and stress),  
-   please review the [COVERAGE.md](./COVERAGE.md) file. It maps each function in  
-   `src/aes-gcm.ts` and `src/encoders.ts` against Positive and Negative test cases  
-   to ensure complete coverage across deterministic, randomized, and heavy‑load scenarios.
+---
 
-4. **Lint and format**
-   ```bash
-   pnpm lint
-   pnpm lint:check
-   pnpm format
-   pnpm format:check
-   ```
+## 🧪 Testing
+
+We maintain **three layers of tests**:
+
+- **Regular tests**: deterministic correctness (round‑trip, wrong key/IV, corrupted ciphertext, malformed encodings).
+- **Fuzz tests**: randomized inputs for breadth (random plaintext, strings, AAD/tag lengths, malformed encodings).
+- **Stress tests**: large inputs and concurrency for robustness (1MB plaintext, 100 sequential, 50 concurrent, large Base64).
+
+### ⚡ Quick Test
+
+You can quickly verify the build with:
+
+```bash
+pnpm build
+node dist/scratch.js
+```
+
+Expected output:
+
+```text
+Packed: <base64url-iv>.<base64url-ciphertext>
+Decrypted: hello, world
+```
+
+### 🧭 Running Tests
+
+We use finer‑control scripts in `package.json`:
+
+```bash
+pnpm test
+pnpm test:regular
+pnpm test:fuzz
+pnpm test:stress
+```
+
+Run all suites:
+
+```bash
+pnpm build
+pnpm test
+```
+
+For details on what is covered by the test suites,  
+please review the [COVERAGE.md](./COVERAGE.md) file. It maps each function in  
+`src/aes-gcm.ts` and `src/encoders.ts` against Positive and Negative test cases  
+to ensure complete coverage across deterministic, randomized, and heavy‑load scenarios.
 
 ---
 
@@ -144,12 +180,7 @@ feat(encoders)!: drop legacy Base32 support
 fix(aes-gcm)!: change IV length requirement
 ```
 
-- `feat!:` or `fix!:` → signals that the change is not backward‑compatible.
-- Commitlint is configured to accept this syntax, so your commit will pass validation.
-
 ### 2. Adding a `BREAKING CHANGE:` footer in the commit body
-
-Include a `BREAKING CHANGE:` section in the commit body when you need to explain details:
 
 ```
 feat(aes-gcm): refactor encryption API
@@ -157,53 +188,25 @@ feat(aes-gcm): refactor encryption API
 BREAKING CHANGE: The IV must now be 12 bytes instead of variable length.
 ```
 
-- The footer must start with `BREAKING CHANGE:` followed by a description.
-- This is useful when the header alone isn't enough to explain the impact.
-
-### Important Notes
-
-- **Scope is required** even for breaking changes (e.g., `feat(api)!:` not just `feat!:`).
-- **Subject line** must still follow the 72‑character limit and sentence‑case rule.
-- Breaking changes should be used only when the change requires users to modify their code or configuration.
-
 ---
 
 ## 🚧 Fixing a Blocked Commit
 
 If Husky + Commitlint reject your commit, it means the message didn't follow our guidelines.
-Don't worry — you can fix it easily:
+You can fix it easily:
 
-### Amending the last commit
+- **Amend the last commit**:
 
-```bash
-git commit --amend
-```
+  ```bash
+  git commit --amend
+  ```
 
-This opens your editor so you can rewrite the message in the correct format.
-Save and close the editor, and the commit will be updated.
+- **If already pushed**:
 
-### Example correction
-
-Blocked message:
-
-```
-update stuff
-```
-
-Fixed message:
-
-```
-fix(aes-gcm): correct IV length validation
-```
-
-### If you already pushed
-
-If you've already pushed the bad commit, amend it locally and then force‑push:
-
-```bash
-git commit --amend
-git push --force-with-lease
-```
+  ```bash
+  git commit --amend
+  git push --force-with-lease
+  ```
 
 ---
 
@@ -213,25 +216,11 @@ git push --force-with-lease
 2. **Verify code quality and correctness** before committing:
 
    ```bash
-   # Run ESLint in check mode (reports issues but does not fix)
    pnpm lint:check
-
-   # Run Prettier in check mode (reports formatting differences without fixing)
    pnpm format:check
-
-   # Run ESLint with auto-fix and Prettier to apply formatting fixes
    pnpm lint && pnpm format
-
-   # Run all test suites (regular, fuzz, stress)
    pnpm test
    ```
-
-   - **Checks should not be concatenated** in CI (keep them separate so you know which tool failed).
-   - Locally, you _can_ chain them (`pnpm lint:check && pnpm format:check`) for convenience, but in scripts/CI it's clearer to run them individually.
-   - `lint:check` → only reports lint issues.
-   - `lint` → fixes lint issues automatically.
-   - `format:check` → only reports formatting issues.
-   - `format` → fixes formatting issues automatically.
 
 3. **Update documentation** if you add new features or modify existing behavior.
 4. **Open a pull request** with:
@@ -243,5 +232,5 @@ git push --force-with-lease
 
 ## 🙌 Thank You
 
-By following these guidelines, you help keep the project maintainable and welcoming for everyone.
+By following these guidelines, you help keep the project maintainable and welcoming for everyone.  
 We appreciate your contributions and look forward to collaborating!
