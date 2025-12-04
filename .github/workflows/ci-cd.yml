@@ -30,11 +30,11 @@ jobs:
 
       # 📦 Install pnpm globally
       - name: Install pnpm
-        run: npm install -g pnpm@10
+        run: npm install -g pnpm@10 --ignore-scripts
 
       # 📚 Install dependencies
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
       # 🔨 Build the project
       - name: Build
@@ -74,11 +74,11 @@ jobs:
 
       # 📦 Install pnpm globally
       - name: Install pnpm
-        run: npm install -g pnpm@10
+        run: npm install -g pnpm@10 --ignore-scripts
 
       # 📚 Install dependencies
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
       # 🔨 Build the project
       - name: Build project
